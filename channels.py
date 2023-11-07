@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.stats import rice
 
 
 def rayleigh_channel(x, sigma_r, sigma_n):
@@ -100,3 +101,33 @@ def generate_h_for_isi_channel(n, sigma_h=1, alfa=1, sign="mixed"):
         h = np.abs(h)
 
     return h
+
+
+def rice_channel(x, r, sigma_r, sigma_n):
+    """
+    rice_channel(x, sigma_r, sigma_n)
+        Function simulating the Rice Fading Channel.
+            y = c*x + n
+
+        Parameters
+        ----------
+        x: 1-D array-like or float
+            an input array or value for the channel
+        r: float
+            a value for distance of the bi-variate Gaussian from the (0, 0) point
+        sigma_r: float
+            a value of sigma for the bi-variate Gaussian with covariance matrix sigma_r**2 * I
+        sigma_n: float
+            a value of sigma for Gaussian distribution of n
+
+        Returns
+        -------
+        out : 1-D array-like or float (like x)
+            output of the channel
+    """
+    n = x.size
+    a = np.random.normal(loc=r, scale=sigma_r, size=n)
+    b = np.random.normal(loc=0.0, scale=sigma_r, size=n)
+    c = np.sqrt(a**2 + b**2)
+    norm = np.random.normal(loc=0.0, scale=sigma_n, size=n)
+    return c * x + norm

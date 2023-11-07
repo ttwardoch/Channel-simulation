@@ -7,6 +7,7 @@ from channels import *
 n = 1000000
 sigma_r = 1
 sigma_n = 1
+r = 1
 
 errors = []
 SNRs = []
@@ -18,6 +19,7 @@ for log_x_strength in np.linspace(-2, 4, 61):
     data = np.random.choice((-1, 1), size=n)  # Generate bits using BPSK (-1 or 1)
     x = x_strength * data  # Set amplitude
     # y = rayleigh_channel(x, sigma_r, sigma_n)  # Find channel output
+    # y = rice_channel(x, r, sigma_r, sigma_n)  # Find channel output
     y = isi_channel(x, h, sigma_n)  # Find channel output
 
     # Find SNR and error rate, it is BPSK, and it is symmetrical so all positive act as 1 and negative as -1
