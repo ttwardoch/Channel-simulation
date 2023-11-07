@@ -18,9 +18,9 @@ for log_x_strength in np.linspace(-2, 4, 61):
 
     data = np.random.choice((-1, 1), size=n)  # Generate bits using BPSK (-1 or 1)
     x = x_strength * data  # Set amplitude
-    # y = rayleigh_channel(x, sigma_r, sigma_n)  # Find channel output
+    y = rayleigh_channel(x, sigma_r, sigma_n)  # Find channel output
     # y = rice_channel(x, r, sigma_r, sigma_n)  # Find channel output
-    y = isi_channel(x, h, sigma_n)  # Find channel output
+    # y = isi_channel(x, h, sigma_n)  # Find channel output
 
     # Find SNR and error rate, it is BPSK, and it is symmetrical so all positive act as 1 and negative as -1
     data_out = np.array([i/abs(i) for i in y])
@@ -36,7 +36,7 @@ plt.plot(SNRs, errors)
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("SNR")
-plt.ylabel("Pe")
+plt.ylabel("BER")
 plt.title("Probability of error given the SNR")
 plt.grid()
 plt.show()
